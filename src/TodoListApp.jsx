@@ -1,18 +1,29 @@
+import { useState } from 'react'
 import './todolist.css'
-import Button from './components/Button.jsx'
-import TodoItemEmpty from './components/TodoItemEmpty.jsx'
 import TodoHeader from './components/TodoHeader.jsx'
-import Checkbox from './components/Checkbox.jsx'
 import TodoAdder from './components/TodoAdder.jsx'
-import TodoItem from './components/TodoItem.jsx'
 import TodoList from './components/TodoList.jsx'
 
+class Todo {
+    constructor (text) { 
+        this.id = Date.now(); 
+        this.text = text; 
+        this.isCompleted = false; 
+    }
+}
+
 function TodoListApp() {
+    const [todos, setTodos] = useState([]); 
+
+    const addTodo = (text) => {
+        setTodos((prevTodos) => [...prevTodos, new Todo(text)]);
+    };
+
     return (
         <div className="todo">
             <TodoHeader />
-            <TodoAdder />
-            <TodoList/>
+            <TodoAdder addTodo={addTodo} />
+            <TodoList todos={todos} />
         </div>
     )
 }
